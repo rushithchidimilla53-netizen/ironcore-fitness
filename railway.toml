@@ -1,2 +1,2 @@
 [deploy]
-python manage.py migrate && gunicorn fitness_website.wsgi
+startCommand = "gunicorn fitness_website.wsgi:application"
