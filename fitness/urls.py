@@ -150,5 +150,4 @@ path(
     name='change_password_done'
 ),
 
-
 ]

@@ -105,11 +105,11 @@ GALLERY_IMAGES = [
 ]
 
 PRICING_PLANS = [
-    {"id": 1, "tag": "Basic", "price": 1499, "featured": False, "desc": "Perfect for getting started with your fitness journey.",
+    {"id": 1, "tag": "Basic", "price": 999, "featured": False, "desc": "Perfect for getting started with your fitness journey.",
      "features": ["Full Gym Access", "2 Group Classes/mo", "Locker Room Access", "Mobile App Access"]},
-    {"id": 2, "tag": "Pro", "price": 2999, "featured": True, "desc": "Our most popular plan for serious, consistent training.",
+    {"id": 2, "tag": "Pro", "price": 1499, "featured": True, "desc": "Our most popular plan for serious, consistent training.",
      "features": ["Full Gym Access", "Unlimited Group Classes", "1 PT Session/mo", "Diet Plan Included", "Sauna & Recovery Zone"]},
-    {"id": 3, "tag": "Elite", "price": 4999, "featured": False, "desc": "All-access pass with dedicated personal coaching.",
+    {"id": 3, "tag": "Elite", "price": 1999, "featured": False, "desc": "All-access pass with dedicated personal coaching.",
      "features": ["Full Gym Access", "Unlimited Group Classes", "8 PT Sessions/mo", "Custom Diet & Program", "Priority Booking", "Guest Passes x2"]},
 ]
 

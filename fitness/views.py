@@ -394,9 +394,9 @@ import razorpay
 def payment(request, plan_id):
 
     plans = {
-        1: {"name": "Basic", "price": 1499},
-        2: {"name": "Pro", "price": 2999},
-        3: {"name": "Elite", "price": 4999},
+        1: {"name": "Basic", "price": 999},
+        2: {"name": "Pro", "price": 1499},
+        3: {"name": "Elite", "price": 1999},
     }
 
     plan = plans.get(plan_id)
