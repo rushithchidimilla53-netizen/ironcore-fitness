@@ -1,0 +1,41 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Testimonials — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Reviews</span>
+    <h1 class="section-title">Member Testimonials</h1>
+    <p class="section-desc mx-auto">Real stories from real members who transformed their lives at IRONCORE.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      {% for t in testimonials %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">{% for i in "12345" %}<i class="fa-solid fa-star"></i>{% endfor %}</div>
+          <p class="testimonial-quote">"{{ t.quote }}"</p>
+          <div class="testimonial-author">
+            <img src="{{ t.img }}" alt="{{ t.name }}">
+            <div><h6>{{ t.name }}</h6><span>{{ t.role }}</span></div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Ready To Write Your Own Success Story?</h2>
+      <p>Join thousands of members who've already transformed with IRONCORE.</p>
+      <a href="{% url 'register' %}" class="btn btn-gradient-red btn-lg-custom">Join Today</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

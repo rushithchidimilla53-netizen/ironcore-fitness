@@ -1,0 +1,55 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Pricing — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Membership</span>
+    <h1 class="section-title">Simple, Honest Pricing</h1>
+    <p class="section-desc mx-auto">No hidden fees. Cancel anytime. Choose the plan that fits your goals.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      {% for plan in plans %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="pricing-card {% if plan.featured %}featured{% endif %}">
+          {% if plan.featured %}<div class="pricing-badge">Most Popular</div>{% endif %}
+          <span class="badge-soft">{{ plan.tag }}</span>
+          <div class="price-value">₹{{ plan.price }}<span>/mo</span></div>
+          <p>{{ plan.desc }}</p>
+          <ul class="pricing-features">
+           {% for f in plan.features %}<li><i class="fa-solid fa-check"></i>{{ f }}</li>{% endfor %}
+          </ul>
+          <a href="{% url 'payment' plan.id %}" class="btn {% if plan.featured %}btn-gradient-red{% else %}btn-outline-light-custom{% endif %} w-100">
+    Get Started
+</a>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Questions</span>
+      <h2 class="section-title">Pricing FAQ</h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        {% for item in faqs %}
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question">{{ item.q }}<i class="fa-solid fa-plus"></i></div>
+          <div class="faq-answer"><p>{{ item.a }}</p></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,277 @@
+{% extends 'fitness/base.html' %}
+
+{% block title %}My Profile — IRONCORE{% endblock %}
+
+{% block extra_css %}
+<style>
+
+    .profile-page {
+        min-height: calc(100vh - 80px);
+        padding: 70px 20px;
+        background:
+            radial-gradient(circle at top left, rgba(255, 59, 59, .10), transparent 35%),
+            #080808;
+    }
+
+    .profile-wrapper {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .profile-header .profile-icon {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff3b3b, #b90000);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 34px;
+        box-shadow: 0 15px 40px rgba(255, 59, 59, .25);
+    }
+
+    .profile-header h1 {
+        color: white;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .profile-header p {
+        color: #888;
+        margin: 0;
+    }
+
+    .profile-card {
+        background: #111;
+        border: 1px solid #292929;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+
+    .profile-card-title {
+        padding: 25px 30px;
+        border-bottom: 1px solid #292929;
+    }
+
+    .profile-card-title h4 {
+        color: white;
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .profile-info {
+        padding: 30px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 18px 0;
+        border-bottom: 1px solid #222;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-icon {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        border-radius: 12px;
+        background: rgba(255, 59, 59, .10);
+        color: #ff3b3b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .info-label {
+        color: #777;
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    .info-value {
+        color: #eee;
+        font-weight: 500;
+        word-break: break-word;
+    }
+
+    .profile-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 25px 30px;
+        border-top: 1px solid #292929;
+    }
+
+    .profile-btn {
+        border-radius: 10px;
+        padding: 11px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: .25s;
+    }
+
+    .btn-change {
+        background: #ff3b3b;
+        color: white;
+    }
+
+    .btn-change:hover {
+        background: #ff5555;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-logout {
+        border: 1px solid #ff3b3b;
+        color: #ff3b3b;
+    }
+
+    .btn-logout:hover {
+        background: #ff3b3b;
+        color: white;
+    }
+
+    @media(max-width: 576px) {
+
+        .profile-page {
+            padding: 40px 15px;
+        }
+
+        .profile-info {
+            padding: 20px;
+        }
+
+        .profile-card-title {
+            padding: 20px;
+        }
+
+        .profile-actions {
+            padding: 20px;
+        }
+
+        .profile-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="profile-page">
+
+    <div class="profile-wrapper">
+        <div class="profile-header">
+            <div class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <h1>My Profile</h1>
+
+            <p>Manage your IRONCORE account</p>
+
+        </div>
+        <div class="profile-card">
+
+            <div class="profile-card-title">
+                <h4>
+                    <i class="fa-solid fa-user-circle me-2"
+                       style="color:#ff3b3b;"></i>
+                    Account Information
+                </h4>
+            </div>
+            <div class="profile-info">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <div class="info-label">
+                            Username
+                        </div>
+                        <div class="info-value">
+                            {{ user.username }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div>
+                        <div class="info-label">
+                            Email Address
+                        </div>
+
+                        <div class="info-value">
+                            {{ user.email }}
+                        </div>
+                    </div>
+
+                </div>
+            
+                <div class="info-item">
+
+                    <div class="info-icon">
+                        <i class="fa-solid fa-calendar"></i>
+                    </div>
+
+                    <div>
+                        <div class="info-label">
+                            Member Since
+                        </div>
+
+                        <div class="info-value">
+                            {{ user.date_joined|date:"d M Y" }}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="profile-actions">
+
+                <a href="{% url 'change_password' %}"
+                   class="profile-btn btn-change">
+
+                    <i class="fa-solid fa-key me-2"></i>
+                    Change Password
+
+                </a>
+
+                <a href="{% url 'logout' %}"
+                   class="profile-btn btn-logout">
+
+                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+                    Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

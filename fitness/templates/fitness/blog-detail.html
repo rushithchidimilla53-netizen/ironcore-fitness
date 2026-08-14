@@ -1,0 +1,140 @@
+{% extends 'fitness/base.html' %}
+
+{% block title %}{{ post.title }} — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+
+<style>
+.post-detail-page {
+    background: #080808;
+    color: #fff;
+    min-height: 100vh;
+    padding: 60px 20px 100px;
+}
+.post-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.post-detail-category {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #ff1f35;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.post-detail-container h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+.post-detail-meta {
+    display: flex;
+    gap: 20px;
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+.post-detail-meta i {
+    color: #ff1f35;
+    margin-right: 5px;
+}
+.post-detail-image {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+.post-detail-image img {
+    width: 100%;
+    display: block;
+}
+.post-detail-content {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #ccc;
+}
+.post-detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff1f35;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+.post-detail-back:hover {
+    color: #fff;
+}
+.post-cta {
+    margin-top: 50px;
+    padding: 35px;
+    background: #111;
+    border: 1px solid #272727;
+    border-radius: 16px;
+    text-align: center;
+}
+.post-cta h4 {
+    margin-bottom: 10px;
+}
+.post-cta p {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+.post-cta a {
+    display: inline-block;
+    padding: 12px 26px;
+    background: #ff1f35;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+}
+.post-cta a:hover {
+    background: #df1529;
+    color: #fff;
+}
+</style>
+
+<div class="post-detail-page">
+    <div class="post-detail-container">
+
+        <a href="{% url 'blog' %}" class="post-detail-back">
+            <i class="fa-solid fa-arrow-left"></i> Back to Blog
+        </a>
+
+        <span class="post-detail-category">{{ post.category }}</span>
+
+        <h1>{{ post.title }}</h1>
+
+        <div class="post-detail-meta">
+            <span><i class="fa-regular fa-calendar"></i>{{ post.date }}</span>
+            <span><i class="fa-regular fa-clock"></i>{{ post.read_time }}</span>
+            <span><i class="fa-regular fa-user"></i>{{ post.author }}</span>
+        </div>
+
+        <div class="post-detail-image">
+            <img src="{{ post.img }}" alt="{{ post.title }}">
+        </div>
+
+        <div class="post-detail-content">
+            <p>{{ post.content }}</p>
+        </div>
+
+        <div class="post-cta">
+            <h4>Ready to put this into practice?</h4>
+            <p>Book a free consultation with our coaches at IRONCORE.</p>
+            <a href="{% url 'contact' %}">Get Started</a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

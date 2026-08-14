@@ -1,0 +1,86 @@
+{% extends 'fitness/base.html' %}
+{% block title %}About Us — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">About IRONCORE</span>
+    <h1 class="section-title">Our Story, Our Mission</h1>
+    <p class="section-desc mx-auto">Founded in 2014, IRONCORE was built on one belief: everyone deserves access to elite-level coaching and a gym that actually pushes them forward.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop" class="img-fluid rounded-4" alt="Gym interior">
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <span class="section-tag">Who We Are</span>
+        <h2 class="section-title">More Than A Gym</h2>
+        <p>IRONCORE Fitness started as a single 2,000 sq ft studio and has grown into one of the city's most respected strength & conditioning facilities. We combine modern equipment, certified coaching, and personalized nutrition to deliver real, lasting results.</p>
+        <p>Our philosophy is simple: sustainable progress beats short-term extremes. Every program we build is designed to fit into your life — not take it over.</p>
+        <div class="row g-4 mt-2">
+          <div class="col-6 counter-box text-start">
+            <h3 class="counter-num" style="font-family:var(--font-display); font-size:2.4rem; color:var(--c-red);" data-count="12">0</h3>
+            <span class="counter-label">Years Running</span>
+          </div>
+          <div class="col-6 counter-box text-start">
+            <h3 class="counter-num" style="font-family:var(--font-display); font-size:2.4rem; color:var(--c-red);" data-count="4500">0</h3>
+            <span class="counter-label">Members Trained</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Our Values</span>
+      <h2 class="section-title">What Drives Us</h2>
+    </div>
+    <div class="row g-4">
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-bullseye" title="Results Driven" desc="Every program is measured, tracked, and adjusted for real progress." delay="0" %}
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-heart" title="Genuine Care" desc="We know every member by name, not membership number." delay="100" %}
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-shield-halved" title="Safety First" desc="Certified coaching and proper form come before heavy weight." delay="200" %}
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-arrow-trend-up" title="Constant Growth" desc="We continually update equipment, classes, and programming." delay="300" %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Leadership</span>
+      <h2 class="section-title">Meet The Founders' Team</h2>
+    </div>
+    <div class="row g-4">
+      {% for trainer in trainers %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="trainer-card">
+          <div class="img-wrap"><img src="{{ trainer.img }}" alt="{{ trainer.name }}"></div>
+          <div class="body">
+            <h5>{{ trainer.name }}</h5>
+            <span class="role">{{ trainer.role }}</span>
+            <p class="small mt-2 mb-0">{{ trainer.bio }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Come See The Difference Yourself</h2>
+      <p>Book a free tour of our facility and meet the team that will get you to your goals.</p>
+      <a href="{% url 'contact' %}" class="btn btn-gradient-red btn-lg-custom">Book A Free Tour</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

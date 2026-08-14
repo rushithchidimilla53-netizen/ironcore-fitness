@@ -1,0 +1,35 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'fitness/css/chatbox.css' %}">
+
+<div id="chat-tooltip">
+  Hi! Need help? 👋
+  <span class="close-tooltip" id="closeTooltip">✕</span>
+</div>
+
+<button id="chat-btn">💬</button>
+
+<div id="chat-container">
+
+  <div id="chat-header">
+    Fitness AI Assistant
+    <span id="close">✖</span>
+  </div>
+
+  <div id="chat-body"></div>
+
+  <div id="chat-footer">
+    <button id="attach-btn" type="button" title="Attach file">+</button>
+    <input id="message" placeholder="Ask anything...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <input type="file" id="file-input" accept="image/*,.pdf" style="display:none">
+  <div id="file-preview" style="display:none;"></div>
+
+</div>
+
+<script>
+const csrftoken = "{{ csrf_token }}";
+</script>
+
+<script src="{% static 'fitness/js/chatbox.js' %}?v=5"></script>

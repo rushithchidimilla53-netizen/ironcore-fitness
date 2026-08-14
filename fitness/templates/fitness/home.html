@@ -1,0 +1,389 @@
+{% extends 'fitness/base.html' %}
+{% load static %}
+{% block title %}IRONCORE Fitness — Train Harder, Live Stronger{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8" data-aos="fade-up">
+        <div class="hero-eyebrow"><i class="fa-solid fa-fire"></i> #1 Rated Gym in the City</div>
+        <h1 class="hero-title">FORGE YOUR<br><span class="highlight">STRONGEST</span> SELF</h1>
+        <p class="hero-desc">Premium strength training, elite coaching, and science-backed nutrition plans — all under one roof. Your transformation starts today.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="{% url 'pricing' %}" class="btn btn-gradient-red btn-lg-custom">Join Now <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          <a href="{% url 'services' %}" class="btn btn-outline-light-custom btn-lg-custom">Our Services</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat"><h3><span class="counter-num" data-count="12">0</span>+</h3><span>Years Experience</span></div>
+          <div class="hero-stat"><h3><span class="counter-num" data-count="4500">0</span>+</h3><span>Members Trained</span></div>
+          <div class="hero-stat"><h3><span class="counter-num" data-count="35">0</span>+</h3><span>Expert Trainers</span></div>
+          <div class="hero-stat"><h3><span class="counter-num" data-count="98">0</span>%</h3><span>Success Rate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-cue"><div class="mouse"></div>Scroll</div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Why Choose Us</span>
+      <h2 class="section-title">Built Different</h2>
+      <p class="section-desc mx-auto">Everything you need to train smarter, recover faster, and stay consistent — in one premium facility.</p>
+    </div>
+    <div class="row g-4">
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-dumbbell" title="Modern Equipment" desc="State-of-the-art strength & cardio machines imported from top global brands." delay="0" %}
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-user-tie" title="Certified Trainers" desc="Every coach is certified, experienced, and obsessed with your progress." delay="100" %}
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-bowl-food" title="Custom Diet Plans" desc="Nutrition programs tailored to your body type and performance goals." delay="200" %}
+      {% include 'fitness/includes/_feature_item.html' with icon="fa-clock" title="Flexible Hours" desc="Open 5 AM to 11 PM every single day — train on your own schedule." delay="300" %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Train By Muscle Group</span>
+      <h2 class="section-title">Workout Categories</h2>
+      <p class="section-desc mx-auto">Pick a focus area and get instant access to curated exercises and routines.</p>
+    </div>
+    <div class="row g-4">
+      {% for cat in workout_categories %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0|default:0 }}00">
+       {% if cat.name == "Chest" %}
+       <a href="{% url 'chest_exercises' %}" class="exercise-category-link">
+        <div class="category-card">
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+
+</a>
+{% elif cat.name == "Back" %}
+<a href="{% url 'back_exercises' %}" class="exercise-category-link">  
+  
+    <div class="category-card">
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+</a>
+
+{% elif cat.name == "Legs" %}
+<a href="{% url 'legs_exercises' %}" class="exercise-category-link">
+    <div class="category-card">
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">  
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+</a>
+
+{% elif cat.name == "Arms" %}
+<a href="{% url 'arms_exercises' %}" class="exercise-category-link">
+    <div class="category-card">     
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+</a>
+
+{% elif cat.name == "Shoulders" %}
+<a href="{% url 'shoulders_exercises' %}" class="exercise-category-link">
+    <div class="category-card">
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">    
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>    
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+</a>
+
+{% elif cat.name == "Abs" %}
+<a href="{% url 'abs_exercises' %}" class="exercise-category-link">
+    <div class="category-card">
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">      
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>  
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+</a>
+
+{% elif cat.name == "Full Body" %}
+<a href="{% url 'fullbody_exercises' %}" class="exercise-category-link"> 
+  
+    <div class="category-card">
+        <img src="{{ cat.img }}" alt="{{ cat.name }}">    
+
+        <div class="cat-badge">
+            <i class="fa-solid {{ cat.icon }}"></i>
+        </div>  
+
+        <div>
+            <h5>{{ cat.name }}</h5>
+            <span>{{ cat.count }} Exercises</span>
+        </div>
+    </div>
+</a>
+
+{% else %}
+
+<div class="category-card">
+
+    <img src="{{ cat.img }}" alt="{{ cat.name }}">
+
+    <div class="cat-badge">
+        <i class="fa-solid {{ cat.icon }}"></i>
+    </div>
+
+    <div>
+        <h5>{{ cat.name }}</h5>
+        <span>{{ cat.count }} Exercises</span>
+    </div>
+
+</div>
+
+{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-5" data-aos="fade-up">
+      <div>
+        <span class="section-tag">Popular Programs</span>
+        <h2 class="section-title mb-0">Workout Plans</h2>
+      </div>
+      <a href="{% url 'workout_plans' %}" class="btn btn-outline-light-custom mt-3 mt-md-0">View All Plans</a>
+    </div>
+    <div class="row g-4">
+      {% for plan in featured_plans %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="program-card">
+          <div class="img-wrap">
+            <img src="{{ plan.img }}" alt="{{ plan.name }}">
+            <span class="level-badge">{{ plan.level }}</span>
+          </div>
+          <div class="body">
+            <h5>{{ plan.name }}</h5>
+            <p class="mb-0 small">{{ plan.desc }}</p>
+            <div class="program-meta">
+              <span><i class="fa-solid fa-clock"></i> {{ plan.duration }}</span>
+              <span><i class="fa-solid fa-fire"></i> {{ plan.calories }}</span>
+              <span><i class="fa-solid fa-layer-group"></i> {{ plan.days }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <span class="section-tag">Nutrition</span>
+        <h2 class="section-title">Fuel Your Transformation</h2>
+        <p class="section-desc">Great training deserves great nutrition. Our dietitians build meal plans around your training split, goals, and lifestyle.</p>
+        <div class="skill-bar">
+          <div class="label"><span>Weight Loss Plans</span><span>92%</span></div>
+          <div class="track"><div class="fill" data-width="92%"></div></div>
+        </div>
+        <div class="skill-bar">
+          <div class="label"><span>Muscle Gain Plans</span><span>88%</span></div>
+          <div class="track"><div class="fill" data-width="88%"></div></div>
+        </div>
+        <div class="skill-bar">
+          <div class="label"><span>Maintenance Plans</span><span>95%</span></div>
+          <div class="track"><div class="fill" data-width="95%"></div></div>
+        </div>
+        <a href="{% url 'diet_plans' %}" class="btn btn-gradient-red mt-2">Explore Diet Plans</a>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-4">
+          {% for diet in featured_diets %}
+          <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+            <div class="program-card">
+              <div class="img-wrap" style="height:160px;">
+                <img src="{{ diet.img }}" alt="{{ diet.name }}">
+              </div>
+              <div class="body">
+                <h5>{{ diet.name }}</h5>
+                <p class="mb-0 small">{{ diet.desc }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Meet The Team</span>
+      <h2 class="section-title">Elite Trainers</h2>
+      <p class="section-desc mx-auto">Certified professionals dedicated to pushing you past your limits — safely and smartly.</p>
+    </div>
+    <div class="row g-4">
+      {% for trainer in featured_trainers %}
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="trainer-card">
+          <div class="img-wrap">
+            <img src="{{ trainer.img }}" alt="{{ trainer.name }}">
+            <div class="trainer-social">
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+          </div>
+          <div class="body">
+            <h5>{{ trainer.name }}</h5>
+            <span class="role">{{ trainer.role }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Real Results</span>
+      <h2 class="section-title">Transformation Gallery</h2>
+    </div>
+    <div class="row g-4">
+      {% for img in transformation_images %}
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="gallery-item">
+          <img src="{{ img }}" alt="Transformation">
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a href="{% url 'gallery' %}" class="btn btn-outline-light-custom">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Membership</span>
+      <h2 class="section-title">Simple, Honest Pricing</h2>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for plan in home_pricing %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="pricing-card {% if plan.featured %}featured{% endif %}">
+          {% if plan.featured %}<div class="pricing-badge">Most Popular</div>{% endif %}
+          <span class="badge-soft">{{ plan.tag }}</span>
+          <div class="price-value">${{ plan.price }}<span>/mo</span></div>
+          <p>{{ plan.desc }}</p>
+          <ul class="pricing-features">
+            {% for f in plan.features %}<li><i class="fa-solid fa-check"></i>{{ f }}</li>{% endfor %}
+          </ul>
+          <a href="{% url 'pricing' %}" class="btn {% if plan.featured %}btn-gradient-red{% else %}btn-outline-light-custom{% endif %} w-100">Choose Plan</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section class="section bg-alt-section overflow-hidden">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Testimonials</span>
+      <h2 class="section-title">What Our Members Say</h2>
+    </div>
+    <div class="slider-track" style="gap:24px;">
+      {% for t in testimonials_home %}
+      <div style="flex:0 0 calc(33.333% - 16px); min-width:280px;" data-aos="fade-up">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">
+            {% for i in "12345" %}<i class="fa-solid fa-star"></i>{% endfor %}
+          </div>
+          <p class="testimonial-quote">"{{ t.quote }}"</p>
+          <div class="testimonial-author">
+            <img src="{{ t.img }}" alt="{{ t.name }}">
+            <div><h6>{{ t.name }}</h6><span>{{ t.role }}</span></div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="slider-dots"></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Ready To Start Your Transformation?</h2>
+      <p>Get your first week free when you join today. No contracts, no excuses — just results.</p>
+      <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <a href="{% url 'contact' %}" class="btn btn-gradient-red btn-lg-custom">Start Free Trial</a>
+        <a href="{% url 'contact' %}" class="btn btn-outline-light-custom btn-lg-custom">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+  });
+</script>
+{% endblock %}

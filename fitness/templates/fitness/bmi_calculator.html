@@ -1,0 +1,83 @@
+{% extends 'fitness/base.html' %}
+{% load static %}
+{% block title %}BMI Calculator — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Free Tool</span>
+    <h1 class="section-title">BMI Calculator</h1>
+    <p class="section-desc mx-auto">Check your Body Mass Index instantly and see where you fall on the health scale.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="tool-card" data-aos="fade-up">
+          <form id="bmiForm">
+            <div class="d-flex gap-4 mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="bmiUnit" id="unitMetric" value="metric" checked>
+                <label class="form-check-label" for="unitMetric">Metric (cm / kg)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="bmiUnit" id="unitImperial" value="imperial">
+                <label class="form-check-label" for="unitImperial">Imperial (ft / lb)</label>
+              </div>
+            </div>
+
+            <div id="metricFields" class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">Height (cm)</label>
+                <input type="number" id="heightCm" class="form-control-custom" placeholder="e.g. 175" required min="50" max="250">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Weight (kg)</label>
+                <input type="number" id="weightKg" class="form-control-custom" placeholder="e.g. 70" required min="20" max="300">
+              </div>
+            </div>
+
+            <div id="imperialFields" class="row g-3 d-none">
+              <div class="col-md-3">
+                <label class="form-label-custom">Height (ft)</label>
+                <input type="number" id="heightFt" class="form-control-custom" placeholder="5">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label-custom">Height (in)</label>
+                <input type="number" id="heightIn" class="form-control-custom" placeholder="9">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Weight (lb)</label>
+                <input type="number" id="weightLb" class="form-control-custom" placeholder="e.g. 154">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-gradient-red btn-lg-custom w-100 mt-4">Calculate BMI</button>
+          </form>
+
+          <div class="result-box" id="bmiResultBox">
+            <span class="section-tag">Your Result</span>
+            <div class="result-value" id="bmiValue">--</div>
+            <h5 id="bmiCategory" style="color:var(--text-main);">--</h5>
+
+            <div class="bmi-scale mt-4">
+              <span class="under"></span><span class="normal"></span><span class="over"></span><span class="obese"></span>
+              <div class="bmi-pointer" id="bmiPointer" style="left:0%;"></div>
+            </div>
+            <div class="d-flex justify-content-between small text-muted mt-1">
+              <span>Underweight</span><span>Normal</span><span>Overweight</span><span>Obese</span>
+            </div>
+            <p class="mt-4 mb-0" id="bmiAdvice"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'fitness/js/bmi.js' %}"></script>
+{% endblock %}

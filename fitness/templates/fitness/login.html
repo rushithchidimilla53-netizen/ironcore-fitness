@@ -1,0 +1,50 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Login — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="auth-wrapper">
+  <div class="container">
+    <div class="auth-card glass-card" data-aos="zoom-in">
+      <div class="text-center mb-4">
+        <a href="{% url 'home' %}" class="navbar-brand justify-content-center mb-3">
+          <span class="brand-icon"><i class="fa-solid fa-dumbbell"></i></span>
+          <span class="brand-text">IRON<span class="text-accent">CORE</span></span>
+        </a>
+        <h3 style="font-family:var(--font-body); font-weight:600; text-transform:none;">Welcome Back</h3>
+        <p class="small mb-0">Login to manage your membership & plans.</p>
+      </div>
+
+      <div class="alert alert-success form-success-msg" style="display:none; background:rgba(46,204,113,0.15); border:1px solid #2ecc71; color:#2ecc71;">
+        Login successful! (UI demo only — no backend connected)
+      </div>
+
+      <form method="POST" action="{% url 'login' %}">
+        
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+    
+        <div class="mb-3">
+          <label class="form-label-custom">Email Address</label>
+          <input type="email" name="email" class="form-control-custom" placeholder="you@example.com" data-validate="required email">
+          <div class="invalid-feedback-custom">Please enter a valid email.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label-custom">Password</label>
+          <input type="password" name="password" class="form-control-custom" placeholder="password" data-validate="required min6">
+          <div class="invalid-feedback-custom">Password must be at least 6 characters.</div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label small" for="rememberMe">Remember me</label>
+          </div>
+          <a href="{% url 'password_reset' %}" class="small text-accent">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-gradient-red btn-lg-custom w-100">Login</button>
+      </form>
+
+      <p class="text-center small mt-4 mb-0">Don't have an account? <a href="{% url 'register' %}" class="text-accent">Create one</a></p>
+    </div>
+  </div>
+</section>
+{% endblock %}

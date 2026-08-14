@@ -1,0 +1,11 @@
+{% comment %}
+Reusable feature card component.
+Usage: {% include 'fitness/includes/_feature_item.html' with icon="fa-dumbbell" title="Title" desc="Description" delay="0" %}
+{% endcomment %}
+<div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ delay }}">
+  <div class="feature-card">
+    <div class="feature-icon"><i class="fa-solid {{ icon }}"></i></div>
+    <h5>{{ title }}</h5>
+    <p class="mb-0">{{ desc }}</p>
+  </div>
+</div>

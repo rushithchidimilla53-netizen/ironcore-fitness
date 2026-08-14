@@ -1,0 +1,48 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Our Trainers — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">The Team</span>
+    <h1 class="section-title">Meet Our Trainers</h1>
+    <p class="section-desc mx-auto">Certified experts across strength, conditioning, nutrition, and recovery.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-4">
+      {% for trainer in trainers %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
+        <div class="trainer-card">
+          <div class="img-wrap">
+            <img src="{{ trainer.img }}" alt="{{ trainer.name }}">
+            <div class="trainer-social">
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+          </div>
+          <div class="body">
+            <h5>{{ trainer.name }}</h5>
+            <span class="role">{{ trainer.role }}</span>
+            <p class="small mt-2 mb-0">{{ trainer.bio }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="cta-section" data-aos="zoom-in">
+      <h2>Want To Train With A Pro?</h2>
+      <p>Book a personal training session with any of our certified coaches.</p>
+      <a href="{% url 'contact' %}" class="btn btn-gradient-red btn-lg-custom">Book A Session</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

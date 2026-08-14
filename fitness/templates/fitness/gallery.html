@@ -1,0 +1,32 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Gallery — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Gallery</span>
+    <h1 class="section-title">Our Gym & Transformations</h1>
+    <p class="section-desc mx-auto">A look inside IRONCORE — our facility, training sessions, and member results.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-btn-group" data-aos="fade-up">
+       <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="transformation">Transformations</button>
+    </div>
+
+    <div class="row g-4">
+      {% for item in gallery_images %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-category="{{ item.cat }}" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0 }}0">
+        <div class="gallery-item">
+          <img src="{{ item.img }}" alt="Gallery image">
+          <div class="gallery-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

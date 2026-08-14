@@ -1,0 +1,379 @@
+{% extends "fitness/base.html" %}
+
+{% block title %}Cardio Exercises - IRONCORE{% endblock %}
+
+{% block content %}
+
+<section class="exercise-page">
+
+    <div class="container">
+
+        <div class="exercise-page-header text-center">
+
+            <span class="section-tag">
+                BROWSE BY MUSCLE GROUP
+            </span>
+
+            <h1 class="section-title">
+                14 CARDIO EXERCISES
+            </h1>
+
+            <p class="section-desc mx-auto">
+                Build your cardiovascular endurance with these effective cardio exercises.
+                Choose an exercise to learn how to perform it
+                and which muscles it targets.
+            </p>
+
+        </div>
+
+        <div class="exercise-filters">
+
+            <button class="exercise-filter active"
+                    data-filter="all">
+                All
+            </button>
+
+            <button class="exercise-filter"
+                    data-filter="Gym">
+                🏋️ Gym
+            </button>
+
+            <button class="exercise-filter"
+                    data-filter="Home">
+                🏠 Home
+            </button>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for exercise in exercises %}
+
+            <div class="col-lg-4 col-md-6 exercise-item"
+                 data-type="{{ exercise.type }}">
+
+                <div class="exercise-card">
+
+                    <div class="exercise-card-image">
+
+                        <img src="{{ exercise.image }}"
+                             alt="{{ exercise.name }}"
+                             loading="lazy">
+
+                        <span class="exercise-type">
+                            {% if exercise.type == "Home" %}
+                                🏠 Home
+                            {% else %}
+                                🏋️ Gym
+                            {% endif %}
+                        </span>
+
+                    </div>
+                    <div class="exercise-card-body">
+
+                        <h3>
+                            {{ exercise.name }}
+                        </h3>
+                        <div class="target-muscle">
+
+                            <span class="muscle-indicator"></span>
+
+                            <div>
+                                <small>TARGET MUSCLE</small>
+                                <strong>{{ exercise.muscle }}</strong>
+                            </div>
+
+                        </div>
+
+                        <div class="exercise-meta">
+
+                            <span>
+                                <i class="fa-solid fa-layer-group"></i>
+                                {{ exercise.sets }} Sets
+                            </span>
+
+                            <span>
+                                <i class="fa-solid fa-repeat"></i>
+                                {{ exercise.reps }} Reps
+                            </span>
+
+                        </div>
+                        <button
+                            type="button"
+                            class="btn btn-gradient-red w-100 view-exercise-btn"
+
+                            data-name="{{ exercise.name }}"
+                            data-type="{{ exercise.type }}"
+                            data-muscle="{{ exercise.muscle }}"
+                            data-sets="{{ exercise.sets }}"
+                            data-reps="{{ exercise.reps }}"
+                            data-image="{{ exercise.image }}"
+                            data-description="{{ exercise.description }}"
+                            data-instructions="{{ exercise.instructions }}"
+                        >
+
+                            View Exercise
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="exercise-modal" id="exerciseModal">
+
+    <div class="exercise-modal-overlay"></div>
+
+    <div class="exercise-modal-box">
+
+        <button class="exercise-modal-close"
+                id="closeExerciseModal">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="exercise-detail-image">
+
+            <img id="detailImage"
+                 src=""
+                 alt="Exercise">
+
+        </div>
+
+
+        <div class="exercise-detail-content">
+
+            <span class="detail-type"
+                  id="detailType">
+            </span>
+
+            <h2 id="detailName">
+            </h2>
+
+            <div class="muscle-highlight">
+
+                <div class="muscle-icon">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+
+                <div>
+                    <span>PRIMARY TARGET MUSCLE</span>
+
+                    <strong id="detailMuscle">
+                    </strong>
+                </div>
+
+            </div>
+            <div class="detail-stats">
+
+                <div>
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    <span>
+                        Sets
+                        <strong id="detailSets"></strong>
+                    </span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-repeat"></i>
+
+                    <span>
+                        Reps
+                        <strong id="detailReps"></strong>
+                    </span>
+                </div>
+
+            </div>
+
+
+            <h4>
+                About this exercise
+            </h4>
+
+            <p id="detailDescription">
+            </p>
+
+
+            <h4>
+                How to perform
+            </h4>
+
+            <p id="detailInstructions">
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const filterButtons =
+        document.querySelectorAll(".exercise-filter");
+
+    const exerciseItems =
+        document.querySelectorAll(".exercise-item");
+
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            filterButtons.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            this.classList.add("active");
+
+            const filter =
+                this.dataset.filter;
+
+
+            exerciseItems.forEach(item => {
+
+                const type =
+                    item.dataset.type;
+
+
+                if (filter === "all" || type === filter) {
+
+                    item.style.display = "";
+
+                } else {
+
+                    item.style.display = "none";
+
+                }
+
+            });
+
+        });
+
+    });
+
+    const modal =
+        document.getElementById("exerciseModal");
+
+    const closeButton =
+        document.getElementById("closeExerciseModal");
+
+    const overlay =
+        document.querySelector(".exercise-modal-overlay");
+
+
+    const detailImage =
+        document.getElementById("detailImage");
+
+    const detailName =
+        document.getElementById("detailName");
+
+    const detailType =
+        document.getElementById("detailType");
+
+    const detailMuscle =
+        document.getElementById("detailMuscle");
+
+    const detailSets =
+        document.getElementById("detailSets");
+
+    const detailReps =
+        document.getElementById("detailReps");
+
+    const detailDescription =
+        document.getElementById("detailDescription");
+
+    const detailInstructions =
+        document.getElementById("detailInstructions");
+
+    document.querySelectorAll(".view-exercise-btn")
+        .forEach(button => {
+
+            button.addEventListener("click", function () {
+
+                detailImage.src =
+                    this.dataset.image;
+
+                detailName.textContent =
+                    this.dataset.name;
+
+                detailType.textContent =
+                    this.dataset.type;
+
+                detailMuscle.textContent =
+                    this.dataset.muscle;
+
+                detailSets.textContent =
+                    this.dataset.sets;
+
+                detailReps.textContent =
+                    this.dataset.reps;
+
+                detailDescription.textContent =
+                    this.dataset.description;
+
+                detailInstructions.textContent =
+                    this.dataset.instructions;
+
+
+                modal.classList.add("show");
+
+                document.body.style.overflow =
+                    "hidden";
+
+            });
+
+        });
+
+    function closeModal() {
+
+        modal.classList.remove("show");
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    closeButton.addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    overlay.addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+                closeModal();
+            }
+
+        }
+    );
+
+});
+
+</script>
+
+{% endblock %}

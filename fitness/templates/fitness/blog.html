@@ -1,0 +1,929 @@
+{% extends 'fitness/base.html' %}
+
+{% block title %}Blog — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+
+<style>
+
+.blog-page {
+    background: #080808;
+    color: #fff;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+.blog-hero {
+    text-align: center;
+    padding: 70px 20px 55px;
+    background:
+        radial-gradient(
+            circle at center top,
+            rgba(255, 25, 40, 0.15),
+            transparent 50%
+        );
+}
+
+.blog-tag {
+    display: inline-block;
+    padding: 7px 15px;
+    border: 1px solid rgba(255, 30, 50, .4);
+    background: rgba(255, 30, 50, .08);
+    color: #ff263c;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.blog-hero h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+.blog-hero h1 span {
+    color: #ff1f35;
+}
+
+.blog-hero p {
+    max-width: 650px;
+    margin: 15px auto 0;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+.blog-search {
+    position: relative;
+    max-width: 500px;
+    margin: 28px auto 0;
+}
+
+.blog-search input {
+    width: 100%;
+    height: 50px;
+    padding: 0 50px 0 20px;
+
+    background: #111;
+    border: 1px solid #292929;
+    border-radius: 30px;
+
+    color: #fff;
+    outline: none;
+}
+
+.blog-search input:focus {
+    border-color: #ff1f35;
+    box-shadow: 0 0 20px rgba(255, 31, 53, .12);
+}
+
+.blog-search input::placeholder {
+    color: #666;
+}
+
+.blog-search i {
+    position: absolute;
+    right: 20px;
+    top: 17px;
+    color: #ff1f35;
+}
+
+
+.blog-filters {
+    text-align: center;
+    padding: 20px 15px 35px;
+}
+
+.filter-btn {
+    background: #111;
+    border: 1px solid #303030;
+    color: #aaa;
+
+    padding: 9px 19px;
+    margin: 4px;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #ff1f35;
+    border-color: #ff1f35;
+    color: #fff;
+
+    box-shadow:
+        0 8px 25px rgba(255, 31, 53, .2);
+}
+
+
+.blog-container {
+    max-width: 1180px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+
+.featured-post {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+
+    background: #111;
+
+    border: 1px solid #272727;
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-bottom: 60px;
+
+    transition: .4s;
+}
+
+.featured-post:hover {
+    border-color: rgba(255, 31, 53, .55);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+.featured-image {
+    height: 390px;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transition: transform .6s ease;
+}
+
+.featured-post:hover .featured-image img {
+    transform: scale(1.06);
+}
+
+.featured-content {
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.featured-label {
+    color: #ff1f35;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 14px;
+}
+
+.featured-content h2 {
+    font-size: 30px;
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.featured-content p {
+    color: #888;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.featured-meta {
+    display: flex;
+    gap: 18px;
+
+    margin: 15px 0 25px;
+
+    color: #666;
+
+    font-size: 11px;
+}
+
+.featured-meta i {
+    color: #ff1f35;
+    margin-right: 5px;
+}
+
+.featured-btn {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 9px;
+
+    width: fit-content;
+
+    padding: 11px 20px;
+
+    background: #ff1f35;
+    color: white;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    transition: .3s;
+}
+
+.featured-btn:hover {
+    background: #df1529;
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+.blog-section-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: end;
+
+    margin-bottom: 25px;
+}
+
+.blog-section-header h2 {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+.blog-section-header span {
+    color: #666;
+    font-size: 11px;
+}
+
+.blog-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 24px;
+}
+
+.blog-card {
+    background: #111;
+
+    border: 1px solid #252525;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    transition:
+        transform .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-7px);
+
+    border-color:
+        rgba(255, 31, 53, .55);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.45);
+}
+
+.img-wrap {
+    position: relative;
+
+    height: 215px;
+
+    overflow: hidden;
+
+    background: #151515;
+}
+
+.img-wrap img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .5s ease;
+}
+
+.blog-card:hover .img-wrap img {
+    transform: scale(1.07);
+}
+
+.blog-category {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    background: #ff1f35;
+
+    color: #fff;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+}
+
+.blog-card .body {
+    padding: 21px;
+}
+
+.blog-meta {
+    display: flex;
+
+    gap: 15px;
+
+    color: #666;
+
+    font-size: 10px;
+
+    margin-bottom: 12px;
+}
+
+.blog-meta i {
+    color: #ff1f35;
+
+    margin-right: 4px;
+}
+
+
+.blog-card h5 {
+    font-size: 17px;
+
+    line-height: 1.35;
+
+    font-weight: 750;
+
+    margin-bottom: 11px;
+
+    color: #fff;
+}
+
+.blog-card p {
+    color: #858585;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+}
+
+.blog-author {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-top: 1px solid #222;
+
+    padding-top: 14px;
+
+    margin-top: 15px;
+}
+
+.badge-soft {
+    background: rgba(255,31,53,.08);
+
+    color: #ff3045;
+
+    border: 1px solid rgba(255,31,53,.2);
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+}
+
+.read-more {
+    color: #ff1f35;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.read-more:hover {
+    color: #fff;
+}
+
+.no-results {
+    display: none;
+
+    text-align: center;
+
+    padding: 70px 20px;
+
+    color: #666;
+}
+
+.no-results i {
+    color: #ff1f35;
+
+    font-size: 35px;
+
+    margin-bottom: 15px;
+}
+
+@media (max-width: 900px) {
+
+    .featured-post {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-image {
+        height: 300px;
+    }
+
+    .blog-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .blog-hero {
+        padding: 50px 15px;
+    }
+
+    .featured-content {
+        padding: 28px;
+    }
+
+    .featured-content h2 {
+        font-size: 24px;
+    }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+    }
+
+}
+
+</style>
+
+
+<div class="blog-page">
+
+
+
+    <section class="blog-hero">
+
+        <span class="blog-tag">
+            IRONCORE INSIGHTS
+        </span>
+
+        <h1>
+            FITNESS <span>BLOG</span>
+        </h1>
+
+        <p>
+            Training tips, nutrition strategies, recovery advice
+            and motivation from the IRONCORE fitness community.
+        </p>
+
+
+        <div class="blog-search">
+
+            <input
+                type="text"
+                id="blogSearch"
+                placeholder="Search fitness articles..."
+            >
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+    </section>
+
+    <div class="blog-filters">
+
+        <button
+            class="filter-btn active"
+            data-filter="all">
+            All
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="Training">
+            Training
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="Nutrition">
+            Nutrition
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="Cardio">
+            Cardio
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="Recovery">
+            Recovery
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="Mindset">
+            Mindset
+        </button>
+
+    </div>
+
+
+    <div class="blog-container">
+
+
+        {% if posts %}
+
+        {% with featured=posts.0 %}
+
+        <div class="featured-post">
+
+            <div class="featured-image">
+
+                <img
+                    src="{{ featured.img }}"
+                    alt="{{ featured.title }}"
+                >
+
+            </div>
+
+
+            <div class="featured-content">
+
+                <div class="featured-label">
+                    FEATURED ARTICLE
+                </div>
+
+                <h2>
+                    {{ featured.title }}
+                </h2>
+
+                <p>
+                    {{ featured.excerpt }}
+                </p>
+
+
+                <div class="featured-meta">
+
+                    <span>
+                        <i class="fa-regular fa-calendar"></i>
+                        {{ featured.date }}
+                    </span>
+
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        {{ featured.read_time }}
+                    </span>
+
+                </div>
+
+
+                <a href="{% url 'blog_detail' featured.slug %}" class="featured-btn">
+                    Read Article
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endwith %}
+
+        {% endif %}
+
+
+        <div class="blog-section-header">
+
+            <h2>
+                Latest Articles
+            </h2>
+
+            <span>
+                Expert knowledge for your fitness journey
+            </span>
+
+        </div>
+
+
+        <div
+            class="blog-grid"
+            id="blogGrid"
+        >
+
+            {% for post in posts %}
+
+            <div
+                class="blog-card"
+                data-category="{{ post.category|lower }}"
+                data-title="{{ post.title|lower }}"
+            >
+
+                <div class="img-wrap">
+
+                    <img
+                        src="{{ post.img }}"
+                        alt="{{ post.title }}"
+                        loading="lazy"
+                    >
+
+                    <span class="blog-category">
+                        {{ post.category }}
+                    </span>
+
+                </div>
+
+
+                <div class="body">
+
+
+                    <div class="blog-meta">
+
+                        <span>
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            {{ post.date }}
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="fa-regular fa-clock"></i>
+
+                            {{ post.read_time }}
+
+                        </span>
+
+                    </div>
+
+
+                    <h5>
+                        {{ post.title }}
+                    </h5>
+
+
+                    <p class="small mb-0">
+                        {{ post.excerpt }}
+                    </p>
+
+
+                    <div class="blog-author">
+
+                        <span class="badge-soft">
+                            {{ post.author }}
+                        </span>
+
+
+                        <a href="{% url 'blog_detail' post.slug %}" class="read-more">
+                            READ MORE →
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="no-results"
+                 style="display:block; grid-column:1/-1;">
+
+                <i class="fa-solid fa-newspaper"></i>
+
+                <h4>
+                    No blog posts available
+                </h4>
+
+                <p>
+                    Check back soon for new fitness articles.
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div
+            class="no-results"
+            id="noResults"
+        >
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <h4>
+                No articles found
+            </h4>
+
+            <p>
+                Try another search or category.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const buttons =
+            document.querySelectorAll(
+                ".filter-btn"
+            );
+
+        const cards =
+            document.querySelectorAll(
+                ".blog-card"
+            );
+
+        const search =
+            document.getElementById(
+                "blogSearch"
+            );
+
+        const noResults =
+            document.getElementById(
+                "noResults"
+            );
+
+
+        let currentFilter = "all";
+
+
+        buttons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    buttons.forEach(btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                    this.classList.add(
+                        "active"
+                    );
+
+
+                    currentFilter =
+                        this.dataset.filter
+                            .toLowerCase();
+
+
+                    filterPosts();
+
+                }
+            );
+
+        });
+
+        search.addEventListener(
+            "input",
+            function () {
+
+                filterPosts();
+
+            }
+        );
+
+        function filterPosts() {
+
+            const searchText =
+                search.value
+                    .toLowerCase()
+                    .trim();
+
+
+            let visibleCount = 0;
+
+
+            cards.forEach(card => {
+
+                const category =
+                    card.dataset.category;
+
+
+                const title =
+                    card.dataset.title;
+
+
+                const categoryMatch =
+                    currentFilter === "all" ||
+                    category === currentFilter;
+
+
+                const searchMatch =
+                    title.includes(searchText) ||
+                    category.includes(searchText);
+
+
+                if (
+                    categoryMatch &&
+                    searchMatch
+                ) {
+
+                    card.style.display =
+                        "";
+
+                    visibleCount++;
+
+                } else {
+
+                    card.style.display =
+                        "none";
+
+                }
+
+            });
+
+
+            if (visibleCount === 0) {
+
+                noResults.style.display =
+                    "block";
+
+            } else {
+
+                noResults.style.display =
+                    "none";
+
+            }
+
+        }
+
+    }
+
+);
+
+</script>
+
+{% endblock %}

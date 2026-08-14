@@ -1,0 +1,70 @@
+{% extends 'fitness/base.html' %}
+{% load static %}
+{% block title %}Workout Timer — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Free Tool</span>
+    <h1 class="section-title">Workout Countdown Timer</h1>
+    <p class="section-desc mx-auto">Set your work/rest intervals and rounds — perfect for HIIT and circuit training.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="tool-card text-center" data-aos="fade-up">
+
+          <div class="timer-ring-wrap mb-3">
+            <svg width="280" height="280" viewBox="0 0 280 280">
+              <circle cx="140" cy="140" r="120" fill="none" stroke="var(--c-border)" stroke-width="12"/>
+              <circle id="ringProgress" cx="140" cy="140" r="120" fill="none" stroke="url(#ringGrad)" stroke-width="12"
+                      stroke-linecap="round" transform="rotate(-90 140 140)" />
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#e50914"/>
+                  <stop offset="100%" stop-color="#ff5f5f"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+              <div class="timer-status" id="timerStatus">Work</div>
+              <div class="timer-display" style="font-size:3.4rem;" id="timerDisplay">00:30</div>
+            </div>
+          </div>
+          <p class="text-muted" id="timerRoundInfo">Round 1 / 5</p>
+
+          <div class="timer-controls">
+            <button id="timerStart" class="btn btn-gradient-red btn-lg-custom"><i class="fa-solid fa-play"></i> Start</button>
+            <button id="timerPause" class="btn btn-outline-light-custom btn-lg-custom" disabled><i class="fa-solid fa-pause"></i> Pause</button>
+            <button id="timerReset" class="btn btn-outline-light-custom btn-lg-custom"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+          </div>
+
+          <div class="divider-line my-5"></div>
+
+          <div class="row g-4 text-start">
+            <div class="col-md-4">
+              <label class="form-label-custom">Work Time (seconds)</label>
+              <input type="number" id="workSeconds" class="form-control-custom" value="30" min="5" max="600">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label-custom">Rest Time (seconds)</label>
+              <input type="number" id="restSeconds" class="form-control-custom" value="15" min="0" max="300">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label-custom">Total Rounds</label>
+              <input type="number" id="totalRounds" class="form-control-custom" value="5" min="1" max="50">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'fitness/js/timer.js' %}"></script>
+{% endblock %}

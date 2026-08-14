@@ -1,0 +1,181 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Contact Us — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Get In Touch</span>
+    <h1 class="section-title">Contact Us</h1>
+    <p class="section-desc mx-auto">Questions about membership, training, or nutrition? We'd love to hear from you.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="glass-card p-4 mb-4">
+          <div class="d-flex gap-3 align-items-start mb-4">
+            <div class="feature-icon" style="width:50px;height:50px;font-size:1.1rem;"><i class="fa-solid fa-location-dot"></i></div>
+            <div><h6 class="mb-1">Our Location</h6><p class="mb-0 small">kompally, beside the asian mall</p></div>
+          </div>
+          <div class="d-flex gap-3 align-items-start mb-4">
+            <div class="feature-icon" style="width:50px;height:50px;font-size:1.1rem;"><i class="fa-solid fa-phone"></i></div>
+            <div><h6 class="mb-1">Call Us</h6><p class="mb-0 small">+91 7993867617</p></div>
+          </div>
+          <div class="d-flex gap-3 align-items-start mb-4">
+            <div class="feature-icon" style="width:50px;height:50px;font-size:1.1rem;"><i class="fa-solid fa-envelope"></i></div>
+            <div><h6 class="mb-1">Email Us</h6><p class="mb-0 small">hello@ironcore.com</p></div>
+          </div>
+          <div class="d-flex gap-3 align-items-start">
+            <div class="feature-icon" style="width:50px;height:50px;font-size:1.1rem;"><i class="fa-solid fa-clock"></i></div>
+            <div><h6 class="mb-1">Working Hours</h6><p class="mb-0 small">Mon - Sun: 5:00 AM - 11:00 PM</p></div>
+          </div>
+        </div>
+        <iframe class="map-embed w-100" height="260" style="border:0;" loading="lazy"
+          src="https://maps.google.com/maps?q=fitness%20gym&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="tool-card">
+          <h4 class="mb-4" style="font-family:var(--font-body); font-weight:600; text-transform:none;">Send Us A Message</h4>
+        {% if messages %}
+    <div class="contact-messages">
+        {% for message in messages %}
+            <div class="contact-alert {{ message.tags }}">
+
+                {% if message.tags == "error" %}
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                {% else %}
+                    <i class="fa-solid fa-circle-check"></i>
+                {% endif %}
+
+                <span>{{ message }}</span>
+
+                <button type="button"
+                        class="contact-message-close"
+                        onclick="this.parentElement.remove()">
+                    &times;
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+         <form method="POST" action="{% url 'contact' %}"
+         class="needs-validation-custom" id="contactForm">
+    {% csrf_token %}
+
+       <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label-custom">Full Name</label>
+
+            <input
+                type="text"
+                name="name"
+                class="form-control-custom"
+                data-validate="required"
+                placeholder="John Doe"
+                required
+            >
+
+            <div class="invalid-feedback-custom">
+                Please enter your name.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label-custom">Email Address</label>
+
+            <input
+                type="email"
+                name="email"
+                class="form-control-custom"
+                data-validate="required email"
+                placeholder="john@example.com"
+                required
+            >
+
+            <div class="invalid-feedback-custom">
+                Please enter a valid email.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label-custom">Phone Number</label>
+
+            <input
+                 type="tel"
+                name="phone"
+                class="form-control-custom"
+                placeholder="9876543210"
+                maxlength="10"
+                minlength="10"
+                pattern="[0-9]{10}"
+                inputmode="numeric"
+                required
+            >
+        <div class="invalid-feedback-custom">
+                Please enter a valid 10-digit phone number.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label-custom">Subject</label>
+
+            <select
+                name="subject"
+                class="form-select-custom form-control-custom"
+                required
+            >
+                <option value="">Select a topic</option>
+                <option value="Membership Inquiry">
+                    Membership Inquiry
+                </option>
+                <option value="Personal Training">
+                    Personal Training
+                </option>
+                <option value="Nutrition Coaching">
+                    Nutrition Coaching
+                </option>
+                <option value="General Question">
+                    General Question
+                </option>
+            </select>
+
+            <div class="invalid-feedback-custom">
+                Please select a subject.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label-custom">Message</label>
+
+            <textarea
+                name="message"
+                class="form-control-custom"
+                rows="5"
+                placeholder="Tell us how we can help..."
+                required
+            ></textarea>
+
+            <div class="invalid-feedback-custom">
+                Please enter a message.
+            </div>
+        </div>
+        <div class="col-12">
+            <button
+                type="submit"
+                class="btn btn-gradient-red btn-lg-custom w-100"
+            >
+                <i class="fa-solid fa-paper-plane me-2"></i>
+                Send Message
+            </button>
+        </div>
+
+    </div>
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

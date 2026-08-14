@@ -1,0 +1,86 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Register — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="auth-wrapper">
+  <div class="container">
+    <div class="auth-card glass-card" data-aos="zoom-in">
+      <div class="text-center mb-4">
+        <a href="{% url 'home' %}" class="navbar-brand justify-content-center mb-3">
+          <span class="brand-icon"><i class="fa-solid fa-dumbbell"></i></span>
+          <span class="brand-text">IRON<span class="text-accent">CORE</span></span>
+        </a>
+        <h3 style="font-family:var(--font-body); font-weight:600; text-transform:none;">Create Your Account</h3>
+        <p class="small mb-0">Join IRONCORE and start training today.</p>
+      </div>
+
+      <div class="alert alert-success form-success-msg" style="display:none; background:rgba(46,204,113,0.15); border:1px solid #2ecc71; color:#2ecc71;">
+        Account created! (UI demo only — no backend connected)
+      </div>
+    {% if errors %}
+      <div class="register-error">
+        {% for error in errors %}
+          <div>{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+     <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label class="form-label-custom">Username</label>
+
+      <input
+        type="text"
+        name="username"
+        class="form-control-custom"
+        placeholder="Choose a username"
+        value="{{ username|default:'' }}"
+        required
+      >
+
+    <div class="invalid-feedback-custom">
+        Please enter a username.
+    </div>
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label-custom">Email Address</label>
+
+        <input
+        type="email"
+        name="email"
+        class="form-control-custom"
+        placeholder="you@example.com"
+        value="{{ email|default:'' }}"
+        required
+        >
+
+    <div class="invalid-feedback-custom">
+        Please enter a valid email.
+    </div>
+    </div>
+        <div class="mb-3">
+          <label class="form-label-custom">Password</label>
+          <input type="password" id="regPassword" name="password1" class="form-control-custom" data-validate="required min6" placeholder="••••••••" required>
+          <div class="invalid-feedback-custom">Password must be at least 6 characters.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label-custom">Confirm Password</label>
+          <input type="password" id="regConfirmPassword" name="password2" class="form-control-custom" data-validate="required match" placeholder="••••••••" required>
+          <div class="invalid-feedback-custom">Passwords do not match.</div>
+        </div>
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="agreeTerms">
+          <label class="form-check-label small" for="agreeTerms">I agree to the Terms & Conditions</label>
+        </div>
+        <button type="submit" class="btn btn-gradient-red btn-lg-custom w-100">Create Account</button>
+      </form>
+
+      <p class="text-center small mt-4 mb-0">Already have an account? <a href="{% url 'login' %}" class="text-accent">Login</a></p>
+    </div>
+  </div>
+</section>
+{% endblock %}

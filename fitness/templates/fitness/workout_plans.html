@@ -1,0 +1,117 @@
+{% extends 'fitness/base.html' %}
+{% block title %}Workout Plans — IRONCORE Fitness{% endblock %}
+
+{% block content %}
+<section class="tool-hero">
+  <div class="container" data-aos="fade-up">
+    <span class="section-tag">Programs</span>
+    <h1 class="section-title">Workout Plans</h1>
+    <p class="section-desc mx-auto">Structured programs for every level — from your first session to competition prep.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-btn-group" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">All Plans</button>
+      <button class="filter-btn" data-filter="Beginner">Beginner</button>
+      <button class="filter-btn" data-filter="Intermediate">Intermediate</button>
+      <button class="filter-btn" data-filter="Advanced">Advanced</button>
+    </div>
+
+    <div class="row g-4">
+      {% for plan in plans %}
+      <div class="col-lg-4 col-md-6" data-category="{{ plan.level }}" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
+        <div class="program-card">
+          <div class="img-wrap">
+            <img src="{{ plan.img }}" alt="{{ plan.name }}">
+            <span class="level-badge">{{ plan.level }}</span>
+          </div>
+          <div class="body">
+            <h5>{{ plan.name }}</h5>
+            <p class="mb-0 small">{{ plan.desc }}</p>
+            <div class="program-meta">
+              <span><i class="fa-solid fa-clock"></i> {{ plan.duration }}</span>
+              <span><i class="fa-solid fa-fire"></i> {{ plan.calories }}</span>
+              <span><i class="fa-solid fa-layer-group"></i> {{ plan.days }}</span>
+            </div>
+            <a href="{% url 'contact' %}" class="btn btn-outline-light-custom w-100 mt-3">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt-section">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-tag">Browse By Muscle Group</span>
+      <h2 class="section-title">Exercise Categories</h2>
+    </div>
+    <div class="row g-4">
+      {% for cat in categories %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0 }}0">
+        {% if cat.name == "Chest" %}
+        <a href="{% url 'chest_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>
+        {% elif cat.name == "Back" %}
+        <a href="{% url 'back_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>  
+        {% elif cat.name == "Legs" %}
+        <a href="{% url 'legs_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>
+        {% elif cat.name == "Shoulders" %}
+        <a href="{% url 'shoulders_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>
+        {% elif cat.name == "Arms" %}
+        <a href="{% url 'arms_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>
+        {% elif cat.name == "Core" %}
+        <a href="{% url 'core_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count  }} Exercises</span></div>
+        </a>
+        {% elif cat.name == "Cardio" %}
+        <a href="{% url 'cardio_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>
+        {% elif cat.name == "Full Body" %}
+        <a href="{% url 'fullbody_exercises' %}" class="category-card category-card-link">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </a>
+        {% else %}
+        <div class="category-card">
+          <img src="{{ cat.img }}" alt="{{ cat.name }}">
+          <div class="cat-badge"><i class="fa-solid {{ cat.icon }}"></i></div>
+          <div><h5>{{ cat.name }}</h5><span>{{ cat.count }} Exercises</span></div>
+        </div>
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

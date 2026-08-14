@@ -1,0 +1,59 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <a href="{% url 'home' %}" class="navbar-brand mb-3 d-inline-block">
+            <span class="brand-icon"><i class="fa-solid fa-dumbbell"></i></span>
+            <span class="brand-text">IRON<span class="text-accent">CORE</span></span>
+          </a>
+          <p class="footer-about">Premium strength &amp; conditioning gym built for people who refuse average. Train hard, eat smart, transform completely.</p>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+          <h6 class="footer-heading">Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href="{% url 'services' %}">Services</a></li>
+            <li><a href="{% url 'trainers' %}">Trainers</a></li>
+            <li><a href="{% url 'pricing' %}">Pricing</a></li>
+            <li><a href="{% url 'blog' %}">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h6 class="footer-heading">Free Tools</h6>
+          <ul class="footer-links">
+            <li><a href="{% url 'bmi_calculator' %}">BMI Calculator</a></li>
+            <li><a href="{% url 'calorie_calculator' %}">Calorie Calculator</a></li>
+            <li><a href="{% url 'workout_timer' %}">Workout Timer</a></li>
+            <li><a href="{% url 'faq' %}">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h6 class="footer-heading">Contact</h6>
+          <ul class="footer-links footer-contact">
+            <li><i class="fa-solid fa-location-dot"></i> 221 Iron Street, Fit City</li>
+            <li><i class="fa-solid fa-phone"></i> +1 (555) 123-4567</li>
+            <li><i class="fa-solid fa-envelope"></i> hello@ironcore.com</li>
+            <li><i class="fa-solid fa-clock"></i> Mon - Sun: 5:00 AM - 11:00 PM</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p class="mb-0">&copy; 2026 IRONCORE Fitness. All rights reserved.</p>
+      <p class="mb-0">Designed &amp; Built with <i class="fa-solid fa-heart text-accent"></i> for a stronger you.</p>
+    </div>
+  </div>
+</footer>
