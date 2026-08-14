@@ -1,9 +1,3 @@
-"""
-Django settings for fitness_website project.
-Frontend-only Fitness Website (Django Templates + Static Files).
-No database, no auth, no APIs — Django is used purely for
-URL routing, template rendering, and static file serving.
-"""
 import os
 load_dotenv = os.getenv('LOAD_DOTENV', 'True') == 'True'
 if load_dotenv:
@@ -75,7 +69,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'fitness' / 'static',
 ]
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
@@ -89,11 +82,9 @@ ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', '')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
-
-#razor pay keys
+N8N_WEBHOOK = os.getenv('N8N_WEBHOOK', '')
 RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID', '')
 RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET', '')
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

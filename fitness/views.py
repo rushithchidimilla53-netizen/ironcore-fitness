@@ -7,7 +7,6 @@ from .data import CORE_EXERCISES
 from .data import CARDIO_EXERCISES
 from .data import FULLBODY_EXERCISES
 
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -29,8 +28,6 @@ from django.conf import settings
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from . import data
-
-
 
 def home(request):
     context = {

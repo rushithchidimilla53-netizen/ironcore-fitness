@@ -1,5 +1,3 @@
-"""URL routes for the fitness app."""
-
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.urls import path
@@ -11,30 +9,24 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView
 )
-
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('services/', views.services, name='services'),
-
     path('workout-plans/', views.workout_plans, name='workout_plans'),
     path('diet-plans/', views.diet_plans, name='diet_plans'),
     path('trainers/', views.trainers, name='trainers'),
-
     path('bmi-calculator/', views.bmi_calculator, name='bmi_calculator'),
     path('calorie-calculator/', views.calorie_calculator, name='calorie_calculator'),
     path('workout-timer/', views.workout_timer, name='workout_timer'),
-
     path('gallery/', views.gallery, name='gallery'),
     path('pricing/', views.pricing, name='pricing'),
     path('testimonials/', views.testimonials, name='testimonials'),
     path('faq/', views.faq, name='faq'),
     path('blog/', views.blog, name='blog'),
     path('contact/', views.contact, name='contact'),
-
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
-
     path(
         'payment/<int:plan_id>/',
         views.payment,
@@ -53,7 +45,6 @@ urlpatterns = [
 
     path('chatbox/', views.chatbox, name='chatbox'),
     path('ai-chat/', views.ai_chat, name='ai_chat'),
-
 
     path(
         'chest-exercises/',

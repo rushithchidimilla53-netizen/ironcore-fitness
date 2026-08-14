@@ -1,11 +1,3 @@
-"""
-Static demo data for the frontend-only fitness website.
-This is NOT a database — just plain Python structures passed
-into templates as context so pages aren't hardcoded with
-repeated markup. Fully allowed since the project explicitly
-avoids Django models / DB, not Python variables.
-"""
-
 WORKOUT_CATEGORIES = [
     {"name": "Chest", "icon": "fa-shield-heart", "count": 24,
     "url": "chest-exercises",
