@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment Test</title>
-</head>
-<body>
-    <h1>Payment Page Working</h1>
+{% extends 'fitness/base.html' %}
 
-    <h2>{{ plan.name }}</h2>
+{% block title %}Membership Payment - IRONCORE{% endblock %}
 
-    <p>Price: ₹{{ plan.price }}</p>
+{% block content %}
 
-    <p>Plan ID: {{ plan_id }}</p>
+<h1>Payment Page Working</h1>
 
-    <p>Razorpay Order ID: {{ order.id }}</p>
-</body>
-</html>
+<h2>{{ plan.name }}</h2>
+
+<p>Price: ₹{{ plan.price }}</p>
+
+<p>Plan ID: {{ plan_id }}</p>
+
+<p>Razorpay Order ID: {{ order.id }}</p>
+
+{% endblock %}
