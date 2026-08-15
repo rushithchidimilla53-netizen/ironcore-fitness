@@ -87,6 +87,7 @@ SERVER_EMAIL = RESEND_FROM_EMAIL
 ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', '')
 
 
+
 N8N_WEBHOOK = os.getenv('N8N_WEBHOOK', '')
 
 RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID', '')
