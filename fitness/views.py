@@ -152,7 +152,7 @@ def contact(request):
         email_message = EmailMessage(
             subject=f"IRONCORE Contact Message from {name}",
             body=email_body,
-            from_email=settings.EMAIL_HOST_USER,
+            from_email=settings.RESEND_FROM_EMAIL,
             to=[settings.ADMIN_EMAIL],
             reply_to=[email],
         )
@@ -163,7 +163,7 @@ def contact(request):
         
         messages.success(
             request,
-            "Thank you! Your message has been sent successfully."
+            "Thank you! Your message has been sent successfully.🎉"
         )
 
         return redirect("contact")
