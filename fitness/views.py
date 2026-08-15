@@ -443,11 +443,15 @@ except Exception as e:
         "razorpay_key_id": settings.RAZORPAY_KEY_ID,
     }
 
+try:
     return render(
         request,
         "fitness/payment.html",
         context
     )
+except Exception as e:
+    print("PAYMENT TEMPLATE ERROR:", type(e).__name__, str(e))
+    raise
 
 import json
 import requests
