@@ -25,8 +25,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 
-
-
+from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -621,7 +620,7 @@ def forgot_password(request):
             )
             return redirect("forgot_password")
 
-        # Generate Django password-reset token
+       
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
@@ -663,9 +662,9 @@ def forgot_password(request):
             <p>
                 IRONCORE Fitness
             </p>
-        </body>
-        </html>
-        """
+         </body>
+         </html>
+         """
 
         try:
             resend.api_key = settings.RESEND_API_KEY

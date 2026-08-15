@@ -1,13 +1,13 @@
-from django.contrib.auth.views import PasswordResetView
+
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.views import (
-    PasswordResetView,
-    PasswordResetDoneView,
     PasswordResetConfirmView,
-    PasswordResetCompleteView
+    PasswordResetCompleteView,
+    PasswordChangeView,
+    PasswordChangeDoneView
 )
 urlpatterns = [
     path('', views.home, name='home'),
@@ -34,13 +34,6 @@ urlpatterns = [
     ),
 
     path('logout/', views.logout_view, name='logout'),
-
-    from .views import forgot_passwords
-    path(
-    "forgot-password/",
-    forgot_password,
-    name="forgot_password"
-    ),
 
     path('chatbox/', views.chatbox, name='chatbox'),
     path('ai-chat/', views.ai_chat, name='ai_chat'),
@@ -101,7 +94,7 @@ path(
         success_url='/forgot-password/sent/'
     ),
     name='password_reset'
-),
+    ),
 
 path(
     'forgot-password/sent/',
