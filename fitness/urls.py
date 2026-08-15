@@ -35,12 +35,11 @@ urlpatterns = [
 
     path('logout/', views.logout_view, name='logout'),
 
+    from .views import forgot_passwords
     path(
-    'forgot-password/',
-    PasswordResetView.as_view(
-        template_name='fitness/forgot_password.html'
-    ),
-    name='password_reset'
+    "forgot-password/",
+    forgot_password,
+    name="forgot_password"
     ),
 
     path('chatbox/', views.chatbox, name='chatbox'),
