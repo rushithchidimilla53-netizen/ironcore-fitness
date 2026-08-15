@@ -414,11 +414,23 @@ def payment(request, plan_id):
     )
 
     
+    # order = client.order.create({
+    #     "amount": plan["price"] * 100,
+    #     "currency": "INR",
+    #     "payment_capture": 1
+    # })
+try:
     order = client.order.create({
         "amount": plan["price"] * 100,
         "currency": "INR",
         "payment_capture": 1
     })
+
+    print("RAZORPAY SUCCESS:", order)
+
+except Exception as e:
+    print("RAZORPAY ERROR:", type(e).__name__, str(e))
+    raise
 
     print("Plan ID:", plan_id)
     print("Plan:", plan)
