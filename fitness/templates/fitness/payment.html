@@ -4,14 +4,104 @@
 
 {% block content %}
 
-<h1>Payment Page Working</h1>
+<section class="auth-wrapper">
+    <div class="container">
+        <div class="auth-card glass-card">
 
-<h2>{{ plan.name }}</h2>
+            <h2 class="text-center mb-4">Membership Payment</h2>
 
-<p>Price: ₹{{ plan.price }}</p>
+            <div class="card bg-dark text-white border-danger p-4 mb-4">
+                <h3 class="text-danger">Selected Plan</h3>
 
-<p>Plan ID: {{ plan_id }}</p>
+                {% if plan_id == 1 %}
+                    <h4>Basic Membership</h4>
+                    <h2>₹999 / Month</h2>
+                {% elif plan_id == 2 %}
+                    <h4>Pro Membership</h4>
+                    <h2>₹1499 / Month</h2>
+                {% else %}
+                    <h4>Elite Membership</h4>
+                    <h2>₹1999 / Month</h2>
+                {% endif %}
 
-<p>Razorpay Order ID: {{ order.id }}</p>
+                <hr>
+
+                <h5>Benefits</h5>
+
+                <ul class="list-unstyled">
+                    <li>✔ Unlimited Gym Access</li>
+                    <li>✔ Personal Trainer</li>
+                    <li>✔ Diet Plan</li>
+                    <li>✔ Locker Facility</li>
+                    <li>✔ Fitness Assessment</li>
+                </ul>
+            </div>
+
+            <h4 class="mb-3">Choose Payment Method</h4>
+
+            <div class="d-grid gap-3">
+
+                <button class="btn btn-outline-light">
+                    💳 Credit / Debit Card
+                </button>
+
+                <button class="btn btn-outline-light">
+                    📱 UPI
+                </button>
+
+                <button class="btn btn-outline-light">
+                    🏦 Net Banking
+                </button>
+
+            </div>
+
+           <button id="rzp-button" class="btn btn-danger btn-lg mt-3 w-100">
+                Pay Now
+           </button>
+
+        </div>
+    </div>
+</section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var razorpayKey = "{{ razorpay_key_id }}";
+var razorpayOrderId = "{{ order.id }}";
+var razorpayAmount = "{{ order.amount }}";
+
+console.log("Razorpay Key:", razorpayKey);
+console.log("Razorpay Order ID:", razorpayOrderId);
+console.log("Razorpay Amount:", razorpayAmount);
+
+var options = {
+    "key": razorpayKey,
+    "amount": razorpayAmount,
+    "currency": "INR",
+    "name": "IRONCORE Fitness",
+    "description": "{{ plan.name }} Membership",
+    "order_id": razorpayOrderId,
+
+    "handler": function (response) {
+        console.log("Payment ID:", response.razorpay_payment_id);
+        console.log("Order ID:", response.razorpay_order_id);
+        console.log("Signature:", response.razorpay_signature);
+
+        alert("Payment Successful!");
+
+        window.location.href = "/";
+    },
+
+    "theme": {
+        "color": "#dc3545"
+    }
+};
+
+var rzp = new Razorpay(options);
+
+document.getElementById("rzp-button").onclick = function(e) {
+    e.preventDefault();
+    rzp.open();
+};
+</script>
 
 {% endblock %}
