@@ -18,6 +18,8 @@ from django.contrib.auth.forms import (
     PasswordResetForm,
     SetPasswordForm
 )
+
+
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -389,7 +391,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import razorpay
 
-
+from django.http import HttpResponse
 @login_required(login_url="login")
 def payment(request, plan_id):
 
@@ -419,6 +421,11 @@ def payment(request, plan_id):
         "currency": "INR",
         "payment_capture": 1
     })
+    print("Razorpay Order:", order)
+
+    return HttpResponse(
+        f"PAYMENT VIEW WORKING - Order ID: {order['id']}"
+    )
 
     print("Plan ID:", plan_id)
     print("Plan:", plan)
