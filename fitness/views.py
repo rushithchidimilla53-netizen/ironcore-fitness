@@ -605,78 +605,71 @@ def blog_detail(request, slug):
 
 
 def forgot_password(request):
+
     if request.method == "POST":
+
         email = request.POST.get("email", "").strip()
 
         try:
-            user = User.objects.get(
-                email__iexact=email,
-                is_active=True
-            )
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
-            messages.success(
+            messages.error(
                 request,
-                "If an account exists with this email, a reset link has been sent."
+                "No account found with this email address."
             )
             return redirect("forgot_password")
 
-       
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        uid = urlsafe_base64_encode(
+            force_bytes(user.pk)
+        )
+
         token = default_token_generator.make_token(user)
 
-        reset_url = (
-            f"https://ironcore-fitness-production.up.railway.app"
-            f"/reset-password/{uid}/{token}/"
+        reset_url = request.build_absolute_uri(
+            reverse(
+                "password_reset_confirm",
+                kwargs={
+                    "uidb64": uid,
+                    "token": token
+                }
+            )
         )
 
         html_content = f"""
-        <html>
-        <body>
-            <h2>IRONCORE Fitness - Password Reset</h2>
+        <h2>IRONCORE Fitness - Password Reset</h2>
 
-            <p>Hello {user.username},</p>
+        <p>Hello {user.username},</p>
 
-            <p>
-                You requested a password reset for your IRONCORE Fitness account.
-            </p>
+        <p>You requested a password reset.</p>
 
-            <p>
-                Click the button below to create a new password:
-            </p>
+        <p>
+            <a href="{reset_url}">
+                Reset Your Password
+            </a>
+        </p>
 
-            <p>
-                <a href="{reset_url}"
-                   style="
-                   display:inline-block;
-                   padding:12px 20px;
-                   background:#dc3545;
-                   color:white;
-                   text-decoration:none;
-                   border-radius:6px;">
-                    Reset Password
-                </a>
-            </p>
-
-            <p>If you did not request this, you can safely ignore this email.</p>
-
-            <p>
-                IRONCORE Fitness
-            </p>
-         </body>
-         </html>
-         """
+        <p>If you did not request this, you can safely ignore this email.</p>
+        """
 
         try:
-            resend.api_key = settings.RESEND_API_KEY
+            send_mail(
+                subject="IRONCORE Fitness - Password Reset",
+                message=(
+                    f"Hello {user.username},\n\n"
+                    "You requested a password reset for your "
+                    "IRONCORE Fitness account.\n\n"
+                    f"Reset your password here:\n{reset_url}\n\n"
+                    "If you did not request this, you can safely "
+                    "ignore this email.\n\n"
+                    "IRONCORE Fitness"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                html_message=html_content,
+                fail_silently=False,
+            )
 
-            result = resend.Emails.send({
-                "from": settings.RESEND_FROM_EMAIL,
-                "to": [user.email],
-                "subject": "IRONCORE Fitness - Password Reset",
-                "html": html_content,
-            })
-
-            print("PASSWORD RESET RESEND RESULT:", result)
+            print("PASSWORD RESET EMAIL SENT SUCCESSFULLY")
 
             messages.success(
                 request,
@@ -685,7 +678,7 @@ def forgot_password(request):
 
         except Exception as e:
             print(
-                "PASSWORD RESET RESEND ERROR:",
+                "PASSWORD RESET EMAIL ERROR:",
                 type(e).__name__,
                 str(e)
             )
@@ -699,5 +692,6 @@ def forgot_password(request):
 
     return render(
         request,
-        "fitness/forgot_password.html"
+        "fitness/forgot_password.html",
+        {"form": PasswordResetForm()}
     )
