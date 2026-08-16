@@ -25,7 +25,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -603,5 +602,6 @@ def blog_detail(request, slug):
         from django.http import Http404
         raise Http404("Blog post not found")
     return render(request, "fitness/blog-detail.html", {"post": post})
+
 
 
