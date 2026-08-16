@@ -38,11 +38,6 @@ urlpatterns = [
     path('chatbox/', views.chatbox, name='chatbox'),
     path('ai-chat/', views.ai_chat, name='ai_chat'),
 
-    path(
-    'forgot-password/',
-    views.forgot_password,
-    name="forgot_password"
-    ),
 
     path(
         'chest-exercises/',
