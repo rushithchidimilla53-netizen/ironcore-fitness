@@ -604,4 +604,100 @@ def blog_detail(request, slug):
     return render(request, "fitness/blog-detail.html", {"post": post})
 
 
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip()
 
+        try:
+            user = User.objects.get(
+                email__iexact=email,
+                is_active=True
+            )
+        except User.DoesNotExist:
+            messages.success(
+                request,
+                "If an account exists with this email, a reset link has been sent."
+            )
+            return redirect("forgot_password")
+
+       
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        reset_url = (
+            f"https://ironcore-fitness-production.up.railway.app"
+            f"/reset-password/{uid}/{token}/"
+        )
+
+        html_content = f"""
+        <html>
+        <body>
+            <h2>IRONCORE Fitness - Password Reset</h2>
+
+            <p>Hello {user.username},</p>
+
+            <p>
+                You requested a password reset for your IRONCORE Fitness account.
+            </p>
+
+            <p>
+                Click the button below to create a new password:
+            </p>
+
+            <p>
+                <a href="{reset_url}"
+                   style="
+                   display:inline-block;
+                   padding:12px 20px;
+                   background:#dc3545;
+                   color:white;
+                   text-decoration:none;
+                   border-radius:6px;">
+                    Reset Password
+                </a>
+            </p>
+
+            <p>If you did not request this, you can safely ignore this email.</p>
+
+            <p>
+                IRONCORE Fitness
+            </p>
+         </body>
+         </html>
+         """
+
+        try:
+            resend.api_key = settings.RESEND_API_KEY
+
+            result = resend.Emails.send({
+                "from": settings.RESEND_FROM_EMAIL,
+                "to": [user.email],
+                "subject": "IRONCORE Fitness - Password Reset",
+                "html": html_content,
+            })
+
+            print("PASSWORD RESET RESEND RESULT:", result)
+
+            messages.success(
+                request,
+                "Password reset link has been sent to your email."
+            )
+
+        except Exception as e:
+            print(
+                "PASSWORD RESET RESEND ERROR:",
+                type(e).__name__,
+                str(e)
+            )
+
+            messages.error(
+                request,
+                "Unable to send password reset email. Please try again."
+            )
+
+        return redirect("forgot_password")
+
+    return render(
+        request,
+        "fitness/forgot_password.html"
+    )
