@@ -604,6 +604,7 @@ def blog_detail(request, slug):
         raise Http404("Blog post not found")
     return render(request, "fitness/blog-detail.html", {"post": post})
 
+
 def forgot_password(request):
     if request.method == "POST":
         email = request.POST.get("email", "").strip()

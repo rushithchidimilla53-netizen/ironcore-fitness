@@ -39,6 +39,12 @@ urlpatterns = [
     path('ai-chat/', views.ai_chat, name='ai_chat'),
 
     path(
+    'forgot-password/',
+    views.forgot_password,
+    name="forgot_password"
+    ),
+
+    path(
         'chest-exercises/',
         views.chest_exercises,
         name='chest_exercises'
@@ -86,7 +92,7 @@ urlpatterns = [
     ),
 
 
-path(
+    path(
     'forgot-password/',
     auth_views.PasswordResetView.as_view(
         template_name='fitness/password_reset.html',
