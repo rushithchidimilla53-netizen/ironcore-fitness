@@ -125,8 +125,12 @@ def free_trial(request):
 
 @login_required(login_url='login')
 def contact(request):
-
     if request.method == "POST":
+
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
+        subject = request.POST.get("subject", "").strip()
+        message = request.POST.get("message", "").strip()
 
         try:
             send_mail(
@@ -152,7 +156,11 @@ def contact(request):
             )
             return redirect("contact")
 
-        
+        messages.success(
+            request,
+            "Thank you! Your message has been sent successfully."
+        )
+        return redirect("contact")
 
     return render(request, "fitness/contact.html")
     
