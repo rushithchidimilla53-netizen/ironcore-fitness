@@ -18,6 +18,7 @@ from django.contrib.auth.forms import (
     PasswordResetForm,
     SetPasswordForm
 )
+import os
 import resend
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
@@ -132,7 +133,6 @@ def contact(request):
         message = request.POST.get("message", "").strip()
         subject = request.POST.get("subject", "").strip()
 
-        
         if not name or not email or not phone or not subject or not message:
             messages.error(
                 request,
@@ -140,7 +140,6 @@ def contact(request):
             )
             return redirect("contact")
 
-        
         if not phone.isdigit() or len(phone) != 10:
             messages.error(
                 request,
@@ -148,26 +147,56 @@ def contact(request):
             )
             return redirect("contact")
 
-        
-        email_body = f""" Name: {name} Email: {email} Phone: {phone} Subject: {subject} Message:{message} """
+        try:
+            import resend
 
-        
-        email_message = EmailMessage(
-            subject=f"IRONCORE Contact Message from {name}",
-            body=email_body,
-            from_email=settings.RESEND_FROM_EMAIL,
-            to=[settings.ADMIN_EMAIL],
-            reply_to=[email],
-        )
+            resend.api_key = os.getenv("RESEND_API_KEY", "")
 
-        
-        email_message.send(fail_silently=False)
+            if not resend.api_key:
+                raise ValueError("RESEND_API_KEY is not configured")
 
-        
-        messages.success(
-            request,
-            "Thank you! Your message has been sent successfully.🎉"
-        )
+            resend_response = resend.Emails.send({
+                "from": os.getenv(
+                    "RESEND_FROM_EMAIL",
+                    "onboarding@resend.dev"
+                ),
+                "to": [settings.ADMIN_EMAIL],
+                "reply_to": [email],
+                "subject": f"IRONCORE Contact Message from {name}",
+                "html": f"""
+                    <h2>IRONCORE Contact Form</h2>
+
+                    <p><strong>Name:</strong> {name}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Phone:</strong> {phone}</p>
+                    <p><strong>Subject:</strong> {subject}</p>
+
+                    <h3>Message</h3>
+                    <p>{message}</p>
+                """,
+            })
+
+            print(
+                "CONTACT EMAIL SENT SUCCESSFULLY:",
+                resend_response
+            )
+
+            messages.success(
+                request,
+                "Thank you! Your message has been sent successfully. 🎉"
+            )
+
+        except Exception as e:
+            print(
+                "CONTACT EMAIL ERROR:",
+                type(e).__name__,
+                str(e)
+            )
+
+            messages.error(
+                request,
+                "Your message could not be sent right now. Please try again."
+            )
 
         return redirect("contact")
 
@@ -176,7 +205,6 @@ def contact(request):
         "fitness/contact.html",
         {"active_page": "contact"}
     )
-
 
 
 def error_404(request, exception=None):
