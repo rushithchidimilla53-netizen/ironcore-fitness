@@ -126,95 +126,56 @@ def free_trial(request):
 @login_required(login_url='login')
 def contact(request):
     if request.method == "POST":
-
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()
-        subject = request.POST.get("subject", "").strip()
+        phone = request.POST.get("phone", "").strip()
         message = request.POST.get("message", "").strip()
+        subject = request.POST.get("subject", "").strip()
 
-        try:
-            send_mail(
-                subject=subject,
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.ADMIN_EMAIL],
-                fail_silently=False,
-            )
-
-            print("CONTACT EMAIL SENT SUCCESSFULLY")
-
-        except Exception as e:
-            print(
-                "CONTACT EMAIL ERROR:",
-                type(e).__name__,
-                str(e)
-            )
-
+        
+        if not name or not email or not phone or not subject or not message:
             messages.error(
                 request,
-                "Your message could not be sent right now. Please try again."
+                "Please fill in all the required fields."
             )
             return redirect("contact")
 
+        
+        if not phone.isdigit() or len(phone) != 10:
+            messages.error(
+                request,
+                "Phone number must contain exactly 10 digits."
+            )
+            return redirect("contact")
+
+        
+        email_body = f""" Name: {name} Email: {email} Phone: {phone} Subject: {subject} Message:{message} """
+
+        
+        email_message = EmailMessage(
+            subject=f"IRONCORE Contact Message from {name}",
+            body=email_body,
+            from_email=settings.RESEND_FROM_EMAIL,
+            to=[settings.ADMIN_EMAIL],
+            reply_to=[email],
+        )
+
+        
+        email_message.send(fail_silently=False)
+
+        
         messages.success(
             request,
-            "Thank you! Your message has been sent successfully."
+            "Thank you! Your message has been sent successfully.🎉"
         )
+
         return redirect("contact")
 
-    return render(request, "fitness/contact.html")
-    
-
-    #     name = request.POST.get("name", "").strip()
-    #     email = request.POST.get("email", "").strip()
-    #     phone = request.POST.get("phone", "").strip()
-    #     message = request.POST.get("message", "").strip()
-    #     subject = request.POST.get("subject", "").strip()
-
-        
-    #     if not name or not email or not phone or not subject or not message:
-    #         messages.error(
-    #             request,
-    #             "Please fill in all the required fields."
-    #         )
-    #         return redirect("contact")
-
-        
-    #     if not phone.isdigit() or len(phone) != 10:
-    #         messages.error(
-    #             request,
-    #             "Phone number must contain exactly 10 digits."
-    #         )
-    #         return redirect("contact")
-
-        
-    #     email_body = f""" Name: {name} Email: {email} Phone: {phone} Subject: {subject} Message:{message} """
-
-        
-    #     email_message = EmailMessage(
-    #         subject=f"IRONCORE Contact Message from {name}",
-    #         body=email_body,
-    #         from_email=settings.RESEND_FROM_EMAIL,
-    #         to=[settings.ADMIN_EMAIL],
-    #         reply_to=[email],
-    #     )
-
-        
-    #     email_message.send(fail_silently=False)
-
-        
-    #     messages.success(
-    #         request,
-    #         "Thank you! Your message has been sent successfully.🎉"
-    #     )
-
-    #     return redirect("contact")
-
-    # return render(
-    #     request,
-    #     "fitness/contact.html",
-    #     {"active_page": "contact"}
-    # )
+    return render(
+        request,
+        "fitness/contact.html",
+        {"active_page": "contact"}
+    )
 
 
 
